@@ -1,0 +1,20 @@
+- name: Summary practice - Copy and execute script
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy hello world script to /tmp/hello.sh
+      copy:
+        content: |
+          #!/bin/bash
+          echo "Hello, world!"
+        dest: /tmp/hello.sh
+        mode: '0755'
+
+    - name: Execute the hello world script
+      shell: /tmp/hello.sh
+      register: script_output
+
+    - name: Print script output
+      debug:
+        var: script_output.stdout
